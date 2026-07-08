@@ -1,0 +1,21 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# Generated PDFs can be rebuilt from paper/main.tex.
+paper/main.pdf
+
+# OS/editor files
+.DS_Store
+*.swp
+*.swo

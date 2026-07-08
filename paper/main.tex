@@ -1,0 +1,59 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{xcolor}
+
+\geometry{margin=1in}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+
+\title{Paper Review Title}
+\author{
+  Member 1 \and
+  Member 2 \and
+  Member 3 \and
+  Member 4
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+本文 review 的论文是：\textbf{TODO: paper title}。
+本文将解释该论文研究的问题、相关研究脉络、核心技术、实现细节、正确性证明和优越性。
+\end{abstract}
+
+\tableofcontents
+
+\input{sections/introduction}
+\input{sections/problem}
+\input{sections/related-work}
+\input{sections/technique}
+\input{sections/implementation}
+\input{sections/proof}
+\input{sections/comparison}
+\input{sections/limitations}
+\input{sections/conclusion}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
