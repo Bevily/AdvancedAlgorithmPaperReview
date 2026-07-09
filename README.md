@@ -29,8 +29,7 @@
 ├── process/                # 过程证据链
 │   ├── timeline.md
 │   ├── task-board.md
-│   ├── contribution-log.md
-│   ├── meetings/
+│   ├── work-sessions/
 │   └── ai-usage/
 ├── refs/                   # 参考资料索引，不建议提交大体积 PDF
 ├── assets/                 # 截图、手绘图、推导草稿扫描等
@@ -40,11 +39,11 @@
 ## 推荐工作流
 
 1. 在 `notes/paper-selection.md` 记录候选论文比较和最终选择理由。
-2. 每位成员在 `notes/reading/` 下创建自己的阅读笔记，例如 `alice-reading-log.md`。
-3. 每次讨论后在 `process/meetings/` 新建会议记录。
+2. 在 `notes/reading/` 下持续记录自己的阅读笔记和疑问。
+3. 每次集中阅读、推导或修改后，在 `process/work-sessions/` 新建工作记录。
 4. 每次使用 AI 后，在 `process/ai-usage/` 记录问题、回答摘要、验证方式和采纳情况。
 5. 先在 `notes/review-outline.md` 逐步形成观点，再迁移到 `paper/sections/`。
-6. 每完成一个小阶段就提交一次 commit，commit message 写清楚贡献内容。
+6. 每完成一个小阶段就提交一次 commit，commit message 写清楚本次推进内容。
 
 ## Commit 建议
 
@@ -70,7 +69,7 @@ process: document AI-assisted explanation verification
 - 相关研究收集过程
 - 大纲形成过程
 - 草稿和修改过程
-- 每位成员的贡献痕迹
+- 个人持续推进的痕迹
 - AI 使用记录及人工验证过程
 
-AI 可以用于帮助理解、查资料和解释概念，但最终内容必须由小组成员理解、验证并独立表述。
+AI 可以用于帮助理解、查资料和解释概念，但最终内容必须由你自己理解、验证并独立表述。

@@ -7,7 +7,7 @@
 - [ ] GitHub 仓库可在线访问
 - [ ] 教师/助教有权限查看仓库和版本历史
 - [ ] `process/timeline.md` 有持续记录
-- [ ] `process/contribution-log.md` 能体现每位成员贡献
+- [ ] `process/work-sessions/` 能体现持续阅读、理解和修改过程
 - [ ] `notes/reading/` 有阅读过程
 - [ ] `notes/related-work/related-work-matrix.md` 有检索和比较过程
 - [ ] `process/ai-usage/` 记录了 AI 使用和验证过程

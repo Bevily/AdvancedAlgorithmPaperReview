@@ -1,16 +1,17 @@
 # Reading Notes
 
-建议每位成员创建自己的阅读笔记文件，例如：
+建议按主题或日期创建自己的阅读笔记文件，例如：
 
-- `member-a-reading-log.md`
-- `member-b-reading-log.md`
+- `2026-07-09-introduction.md`
+- `2026-07-10-main-technique.md`
+- `proof-reading-log.md`
 
 每次阅读都记录日期、阅读范围、理解、疑问和下一步。
 
 ## Template
 
 ```md
-# Reading Log - Name
+# Reading Log - Topic
 
 ## YYYY-MM-DD
 

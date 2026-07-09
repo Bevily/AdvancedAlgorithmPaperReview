@@ -43,6 +43,6 @@
 
 ## Figures or Examples Needed
 
-| Figure / Example | Purpose | Owner | Status |
-|---|---|---|---|
-|  |  |  |  |
+| Figure / Example | Purpose | Status |
+|---|---|---|
+|  |  |  |

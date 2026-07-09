@@ -4,6 +4,10 @@
 
 不要只写“用了 AI”。要写清楚问了什么、AI 回答了什么、你如何验证、最终有没有采纳。
 
+本项目额外维护一个持续日志：
+
+- `conversation-log.md`: 按时间顺序记录与 AI 的所有作业相关对话，包括用户问题、AI 回答/操作、产生的文件和需要人工验证的内容。
+
 ## File Naming
 
 ```text
@@ -16,7 +20,7 @@ YYYY-MM-DD-topic.md
 # AI Usage - YYYY-MM-DD - Topic
 
 - Tool:
-- User/member:
+- User:
 - Purpose:
 
 ## Prompt Summary
