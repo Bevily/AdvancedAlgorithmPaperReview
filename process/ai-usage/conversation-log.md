@@ -477,3 +477,93 @@ AI 将使用提交信息“新增AGENTS.md”提交当前更改，并推送到 G
 ### Verification / Follow-up
 
 提交和推送完成后，需要通过 git 状态确认工作区干净，并确认本地分支已推送到远端。
+
+## 2026-07-11: 咨询下一步工作安排
+
+### User Prompt
+
+用户问：
+
+> 好的 我接下来应该做什么呢
+
+### AI Response / Action
+
+AI 根据当前项目状态建议下一步应优先从 FLP 论文的主证明入手，而不是继续扩写正文。原因是项目已经完成“论文解决了什么问题”的初步理解和 LaTeX 问题章节草稿，但证明笔记、相关工作、大纲和任务板仍然空缺或未同步。
+
+AI 建议的近期路线是：先读 Section 2 的形式化模型和 Section 3 的主证明，整理 bivalent / univalent、Lemma 2、Lemma 3、admissible nondeciding run 等关键概念；再把理解写入 `notes/proofs/proof-notes.md` 和 `notes/review-outline.md`；最后再迁移到 LaTeX 正文。
+
+### Files Created / Modified
+
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+后续可以继续让 AI 陪读 FLP Section 2 和 Section 3，但正式论文内容仍需用户核对原文并用自己的话改写。
+
+## 2026-07-11: 解释 FLP 研究的问题为什么重要
+
+### User Prompt
+
+用户说：
+
+> 我还需要解决一个问题 就是 这个论文研究的问题为什么重要
+
+### AI Response / Action
+
+AI 根据 `AGENTS.md` 的要求先阅读项目规则，并从 `docs/flp.pdf` 的 Introduction 和 Conclusion 中提取与问题重要性相关的内容。AI 总结认为，FLP 研究的问题重要，主要因为共识是分布式数据处理、分布式文件管理、容错应用和分布式数据库事务提交的基础；如果进程对 commit / abort 等决定不一致，系统状态会分裂。
+
+AI 进一步解释，FLP 的贡献不是指出某个具体协议失败，而是证明在完全异步、可靠消息、最多一个 crash failure 的模型下，确定性共识协议无法保证所有合法执行都终止。这一结论迫使后续系统和理论工作显式引入额外假设，例如同步或部分同步、故障检测、随机化协议或较弱的终止要求。
+
+AI 将这部分理解整理为新的阅读笔记，并把相应内容补入 LaTeX 的 `Problem and Motivation` 章节。
+
+### Files Created / Modified
+
+- `notes/reading/problem-importance.md`
+- `paper/sections/problem.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+本次解释依据 `docs/flp.pdf` 的 Introduction 和 Conclusion。正式论文中仍需要用户核对原文表述，并用自己的语言改写或调整引用。
+
+## 2026-07-11: 重组 Problem and Motivation 章节措辞
+
+### User Prompt
+
+用户要求：
+
+> 请你重新组织一下problem and motivation章节的措辞 使语言更严谨规范，更符合一篇review的要求，更加的有条理，有逻辑
+
+### AI Response / Action
+
+AI 阅读了 `AGENTS.md`、当前 `paper/sections/problem.tex` 和 `notes/reading/problem-importance.md`，判断原章节的主要问题是叙述顺序较松散：问题定义、示例、重要性和最终问题表述之间存在回跳。AI 将该章节重组为更适合 review 的逻辑顺序：先定义 FLP 研究对象，再说明共识问题的重要性，然后介绍协议要求和系统模型，接着用事务提交例子解释异步模型下的困难，最后总结 FLP 的不可能性结论及其对后续系统设计的边界意义。
+
+### Files Created / Modified
+
+- `paper/sections/problem.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+AI 已运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，LaTeX 编译通过。当前仍有 bibliography 为空的正常提醒，因为正文尚未加入 `\cite{...}`。用户后续仍应根据原论文检查术语和表述是否符合自己的理解。
+
+## 2026-07-11: 收束 Problem and Motivation 章节范围
+
+### User Prompt
+
+用户反馈：
+
+> 我觉得在问题这一章节不需要说这篇论文的结果 以及这个结果有什么重要意义 只需要有这篇论文解决了什么问题 以及这个问题的重要性就行了
+
+### AI Response / Action
+
+AI 采纳该反馈，认为 `Problem and Motivation` 章节应聚焦于“论文研究什么问题”和“为什么这个问题重要”，不应提前展开 FLP 的否定结论或该结论对后续系统设计的理论边界意义。AI 因此删除了章节末尾关于“FLP 的答案是否定的”和“不可能性结果的重要意义”的总结段落，仅保留清晰的问题表述、问题背景、系统模型和事务提交动机示例。
+
+### Files Created / Modified
+
+- `paper/sections/problem.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+AI 已运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，LaTeX 编译通过。后续可在 proof、comparison 或 limitations 章节中再讨论 FLP 结论及其重要意义。
