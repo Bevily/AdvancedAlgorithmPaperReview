@@ -394,3 +394,86 @@ AI 将此前关于 FLP 论文问题定义的对话整理为项目材料：
 ### Verification / Follow-up
 
 后续需要继续核对 FLP 原文中的形式化定义，并在最终正文中加入引用。
+
+## 2026-07-10: 询问新 vLLM 实验项目结构中各部分职责
+
+### User Prompt
+
+我准备在一台 Spark 机器上重新写一个基于 vLLM 的实验项目，主要实验包括：
+
+- 三档部署，以及 FP4 / FP8 / BF16 分开部署时的开销对比；
+- 混合精度请求到来时如何调度。
+
+AI 先给出了一个新的项目结构。随后我追问：
+
+> 请你详细给我讲讲 整个项目结构中 每一部分分别是做什么的
+
+### AI Response / Action
+
+AI 将逐层解释新项目结构中各目录和文件的职责，包括：
+
+- 项目根目录文件；
+- `docs/` 文档；
+- `configs/` 实验配置；
+- `src/mp_vllm/` 核心代码；
+- `experiments/` 具体实验入口；
+- `scripts/` 环境和运维脚本；
+- `benchmarks/` 压测入口；
+- `workloads/` 请求数据；
+- `results/` 实验输出；
+- `notebooks/` 分析笔记本；
+- `tests/` 单元测试。
+
+### Files Created / Modified
+
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+这是新实验项目的结构设计说明，尚未在文件系统中创建该项目。
+
+## 2026-07-11: 为项目新增 AGENTS.md 记录 AI 日志规则
+
+### User Prompt
+
+用户要求：
+
+> 请你为这个项目写一份AGENTS.md，主要内容就是 我所有和你对话的内容，包括我的输入和你的输入 都记录进ai使用日志 ，使用格式参考当前的ai日志中的格式
+
+### AI Response / Action
+
+AI 检查了项目根目录，确认当前不存在 `AGENTS.md`。随后参考 `process/ai-usage/conversation-log.md` 中已有日志格式，为项目新增 `AGENTS.md`，要求所有后续 AI 助手/代理进入本仓库后，都必须把与本项目相关的用户输入、AI 回答或操作、文件变化、验证和后续事项追加记录到 AI 使用日志中。
+
+AI 同时将本次创建 `AGENTS.md` 的对话追加到当前 AI 使用日志，立即按照新规则执行。
+
+### Files Created / Modified
+
+- `AGENTS.md`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+后续所有与本项目相关的 AI 对话都应继续追加到 `process/ai-usage/conversation-log.md`，格式参考已有条目。
+
+## 2026-07-11: 提交并推送新增 AGENTS.md
+
+### User Prompt
+
+用户要求：
+
+> 好的 请将当前更改推送到github，项目描述为“新增AGENTS.md”
+
+### AI Response / Action
+
+AI 按照 `AGENTS.md` 中的要求，先将本次用户请求和后续操作追加到 AI 使用日志。随后检查 git 状态和远端配置，确认当前分支为 `main`，远端为 `origin`，待提交内容包括新增的 `AGENTS.md` 和更新后的 `process/ai-usage/conversation-log.md`。
+
+AI 将使用提交信息“新增AGENTS.md”提交当前更改，并推送到 GitHub 远端仓库。
+
+### Files Created / Modified
+
+- `AGENTS.md`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+提交和推送完成后，需要通过 git 状态确认工作区干净，并确认本地分支已推送到远端。
