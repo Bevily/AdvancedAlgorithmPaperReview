@@ -567,3 +567,128 @@ AI 采纳该反馈，认为 `Problem and Motivation` 章节应聚焦于“论文
 ### Verification / Follow-up
 
 AI 已运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，LaTeX 编译通过。后续可在 proof、comparison 或 limitations 章节中再讨论 FLP 结论及其重要意义。
+
+## 2026-07-13: 整理 FLP 相关研究
+
+### User Prompt
+
+用户要求：
+
+> 接下来该解决该问题有什么相关研究（包括该论文提到的，和没提到的，以及在该论文发表之后的新的相关研究）
+
+### AI Response / Action
+
+AI 根据 `AGENTS.md` 的要求记录本次对话，并围绕 FLP 共识不可能性整理相关研究。AI 首先从 `docs/flp.pdf` 的参考文献和结论中抽取原论文提到的方向，包括 Byzantine agreement、distributed commit、randomized agreement、partial synchrony 等。随后检索并补充 FLP 之后的重要方向，包括 unreliable failure detectors、weakest failure detector、state machine replication、Paxos、PBFT 和 Raft。
+
+AI 将相关研究分为三类：原论文提到的相关研究、原论文没有重点展开但相关的研究、FLP 发表之后的新进展。AI 更新了 `notes/related-work/related-work-matrix.md`，并将代表性内容整理成 LaTeX 正文草稿 `paper/sections/related-work.tex`。为了让正文引用能够解析，AI 同时补充了 `paper/references.bib` 中的代表性文献条目。
+
+### Files Created / Modified
+
+- `notes/related-work/related-work-matrix.md`
+- `paper/sections/related-work.tex`
+- `paper/references.bib`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+AI 已运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，LaTeX 编译通过，新增引用最终均已解析。用户后续应检查每篇相关工作的取舍是否符合课程 review 篇幅，并可进一步补充原论文参考文献中的 commit protocol 细节。
+
+## 2026-07-13: 下载 Related Work Matrix 中的论文 PDF
+
+### User Prompt
+
+用户要求：
+
+> 请把Related Work Matrix 中提到的论文下载到refs/papers文件夹中，我已经下载了三篇
+
+### AI Response / Action
+
+AI 检查了 `refs/papers/`，发现用户已经下载了 `byz.pdf`、`dist-commit.pdf`、`reaching.pdf` 三篇。AI 随后根据 `notes/related-work/related-work-matrix.md` 下载了其余可公开获取的代表性 PDF，包括 Skeen 的 decentralized termination protocol、Skeen 和 Stonebraker 的 crash recovery、Ben-Or 的 randomized agreement、Dwork-Lynch-Stockmeyer 的 partial synchrony、Skeen 的 nonblocking commit protocols、Schneider 的 state machine approach、Chandra-Toueg 的 unreliable failure detectors、Chandra-Hadzilacos-Toueg 的 weakest failure detector、Lamport 的 Paxos 两篇、Castro-Liskov 的 PBFT 和 Ongaro-Ousterhout 的 Raft。
+
+Bracha and Toueg, *Resilient Consensus Protocols* 的 ACM PDF 直链返回 403，Cornell eCommons 直链返回 405/404，因此本次没有成功下载该篇，已在 `refs/README.md` 中标注需要通过 ACM 或图书馆访问。
+
+AI 还使用 `file` 和 `pdfinfo` 验证了已下载 PDF 均为可读取 PDF，并更新 `refs/README.md` 建立 PDF 索引。
+
+### Files Created / Modified
+
+- `refs/papers/*.pdf`
+- `refs/README.md`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已下载的 PDF 均通过 `pdfinfo` 页数检查。后续若需要 Bracha-Toueg 原文，可通过学校图书馆、ACM Digital Library 或其他合法渠道手动下载后放入 `refs/papers/` 并补充索引。
+
+## 2026-07-13: 统一用户下载的三篇论文文件名
+
+### User Prompt
+
+用户要求：
+
+> 请把我下载的那三篇论文的名字也改成和其他论文一样的格式
+
+### AI Response / Action
+
+AI 检查了 `refs/papers/` 中用户原先下载的三篇论文：`reaching.pdf`、`byz.pdf`、`dist-commit.pdf`，并将它们改名为与其他 PDF 一致的作者-年份-标题格式：
+
+- `pease-shostak-lamport-1980-reaching-agreement.pdf`
+- `lamport-shostak-pease-1982-byzantine-generals-problem.pdf`
+- `dolev-strong-1982-distributed-commit-bounded-waiting.pdf`
+
+AI 同步更新了 `refs/README.md` 中的本地文件路径索引。
+
+### Files Created / Modified / Deleted
+
+- Renamed `refs/papers/reaching.pdf` to `refs/papers/pease-shostak-lamport-1980-reaching-agreement.pdf`
+- Renamed `refs/papers/byz.pdf` to `refs/papers/lamport-shostak-pease-1982-byzantine-generals-problem.pdf`
+- Renamed `refs/papers/dist-commit.pdf` to `refs/papers/dolev-strong-1982-distributed-commit-bounded-waiting.pdf`
+- `refs/README.md`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+需要检查 `refs/papers/` 文件清单和 `refs/README.md` 索引，确认旧文件名不再作为当前索引出现。
+
+## 2026-07-13: 阅读相关研究论文并撰写报告
+
+### User Prompt
+
+用户要求：
+
+> 请你阅读这些论文 然后写一个阅读报告放在笔记的相关工作文件夹中
+
+### AI Response / Action
+
+AI 使用 `pdf` 技能处理 `refs/papers/` 中的相关研究 PDF。AI 先用 `pdftotext` 将 15 篇 PDF 提取为临时文本，重点阅读标题、摘要、引言、结论和与 consensus / agreement / commit / failure detector / Paxos / Raft 等关键词相关的段落。个别老扫描件文本提取质量较差，AI 在报告中注明该限制。
+
+AI 随后在 `notes/related-work/` 下新增阅读报告，按五条研究脉络组织：早期 agreement / Byzantine agreement、分布式事务提交与 crash recovery、随机化 agreement、partial synchrony 与 failure detectors、consensus 作为系统构建模块。报告逐篇总结每篇论文解决的问题、核心思想、与 FLP 的关系，以及可在 review 中使用的角度。
+
+### Files Created / Modified
+
+- `notes/related-work/related-work-reading-report.md`
+- `process/ai-usage/conversation-log.md`
+- Temporary extracted text files under `tmp/related-work-text/` were created for reading and then deleted.
+
+### Verification / Follow-up
+
+报告是面向课程 review 的初读整理，不是逐页逐字翻译。后续正式写作前，用户应结合原 PDF 再核对重点引用和具体技术细节。
+
+## 2026-07-13: 咨询相关研究论文 PDF 存放位置
+
+### User Prompt
+
+用户问：
+
+> 如果我想把相关研究的论文下载下来应该放到哪里
+
+### AI Response / Action
+
+AI 建议不要把相关研究 PDF 放进 `paper/` 或 `notes/`，而是放到 `refs/papers/` 这类专门的参考资料目录中，并在 `refs/README.md` 或 `notes/related-work/related-work-matrix.md` 中记录文件名、论文题目、来源链接和用途。对于体积较大的 PDF，如果担心 GitHub 仓库过大，也可以只记录链接、DOI 或本地路径，不提交 PDF 本体。
+
+### Files Created / Modified
+
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+如果后续实际下载 PDF，可以创建 `refs/papers/` 并补充 `refs/README.md` 的索引表。
