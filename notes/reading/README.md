@@ -4,6 +4,8 @@
 
 - `2026-07-09-introduction.md`
 - `2026-07-10-main-technique.md`
+- `2026-07-16-main-technique.md`
+- `2026-07-17-state-machine-proof-order.md`
 - `proof-reading-log.md`
 
 每次阅读都记录日期、阅读范围、理解、疑问和下一步。

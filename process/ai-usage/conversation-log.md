@@ -673,6 +673,30 @@ AI 随后在 `notes/related-work/` 下新增阅读报告，按五条研究脉络
 
 报告是面向课程 review 的初读整理，不是逐页逐字翻译。后续正式写作前，用户应结合原 PDF 再核对重点引用和具体技术细节。
 
+## 2026-07-14: 根据相关工作阅读报告撰写正文相关工作章节
+
+### User Prompt
+
+用户要求：
+
+> 好了 请根据相关工作阅读报告进行正文中相关工作章节的写作
+
+### AI Response / Action
+
+AI 阅读了 `notes/related-work/related-work-reading-report.md` 和当前 `paper/sections/related-work.tex`。AI 将正文相关工作章节从较压缩的初稿重写为更完整的 review 章节，按研究脉络组织，而不是逐篇堆叠。新章节依次讨论：FLP 之前的 Byzantine agreement 背景、分布式事务提交与 crash recovery 背景、随机化 agreement、partial synchrony、failure detectors，以及 state machine replication、Paxos、PBFT 和 Raft 等系统化后续工作。
+
+AI 随后运行 LaTeX 编译检查，发现正文引用了 `skeen1981nonblocking`，但 `paper/references.bib` 中缺少该 BibTeX 条目。AI 根据本地 PDF 和公开元数据补充了 Skeen 1981 年 Nonblocking Commit Protocols 的参考文献条目，并重新运行编译。
+
+### Files Created / Modified
+
+- `paper/sections/related-work.tex`
+- `paper/references.bib`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并生成 `paper/main.pdf`。已额外检查 `paper/main.log`，未发现未解析引用。后续用户应根据课程篇幅决定是否压缩 PBFT 和 Raft 等后续系统部分，并人工核对相关工作表述是否符合课程要求。
+
 ## 2026-07-13: 咨询相关研究论文 PDF 存放位置
 
 ### User Prompt
@@ -692,3 +716,73 @@ AI 建议不要把相关研究 PDF 放进 `paper/` 或 `notes/`，而是放到 `
 ### Verification / Follow-up
 
 如果后续实际下载 PDF，可以创建 `refs/papers/` 并补充 `refs/README.md` 的索引表。
+
+## 2026-07-16: 撰写 FLP 主要技术通俗笔记
+
+### User Prompt
+
+用户多次要求：
+
+> 接下来请一份这篇文章的主要技术的笔记 越通俗易懂越好
+
+### AI Response / Action
+
+AI 按照 `AGENTS.md` 规则先检查项目结构和已有笔记，阅读了 `notes/reading/problem-understanding.md`、`notes/proofs/proof-notes.md`、`notes/reading/README.md`，并用 `pdftotext` 从 `docs/flp.pdf` 中检索 bivalent、univalent、configuration、lemma 等关键证明段落。
+
+AI 新增一份主技术阅读笔记，重点用通俗语言解释 FLP 的 valency-based impossibility proof：configuration / event / schedule 的含义，0-valent、1-valent、bivalent 的直觉，证明如何先找到 bivalent 初始状态，再说明 bivalent 状态可以被延续，最后构造一条无限 bivalent 执行从而违反 termination。AI 还补充了可写进正文的表达草稿和后续需要核对的问题。
+
+AI 同步更新 `notes/reading/README.md`，将新笔记加入阅读笔记示例列表。
+
+### Files Created / Modified / Deleted
+
+- `notes/reading/2026-07-16-main-technique.md`
+- `notes/reading/README.md`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已检查项目已有笔记和原论文 PDF 的关键术语位置。此次只新增理解笔记，未修改正式论文正文，因此未运行 LaTeX 编译。后续用户应结合原论文核对 `bivalent` / `univalent`、合法执行和 fairness 条件的正式表述，再决定如何改写进 `paper/sections/technique.tex`。
+
+## 2026-07-17: 按状态机和论文证明顺序讲解 FLP
+
+### User Prompt
+
+用户要求：
+
+> 请你从状态机的角度 然后沿着论文的证明顺序 ，给我讲解 不要加入你自己的理解
+
+### AI Response / Action
+
+AI 重新提取并阅读了 `docs/flp.pdf` 中第 2 节 Consensus Protocols 和第 3 节 Main Result 的证明文本，重点对齐状态机模型、configuration、event、schedule、Lemma 1、Lemma 2、Lemma 3 以及最终无限 admissible nondeciding run 的构造顺序。AI 随后用中文按论文顺序解释证明结构，并尽量限制在原论文定义和证明步骤内，不加入额外类比或个人化扩展解释。
+
+### Files Created / Modified / Deleted
+
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+本次未修改正式论文正文，也未新增阅读笔记，因此未运行 LaTeX 编译。后续如果要写入正文，需要用户决定是否采用更严格的形式化表述，尤其是 `admissible run`、`bivalent/univalent configuration` 和 Lemma 3 的两个 case。
+
+## 2026-07-17: 将状态机视角证明讲解写入笔记
+
+### User Prompt
+
+用户要求：
+
+> 请你把以上内容写进笔记里
+
+### AI Response / Action
+
+AI 将上一轮按状态机角度、沿原论文证明顺序的讲解整理为单独阅读笔记，避免与此前通俗版主技术笔记混合。新笔记按原论文结构组织：协议作为状态机系统、消息系统和 configuration、step/event/schedule、Lemma 1、partial/total correctness、Theorem 1 反证、bivalent/univalent 定义、Lemma 2、Lemma 3，以及最终 admissible nondeciding infinite run 的构造。
+
+AI 同步更新 `notes/reading/README.md`，将新笔记加入阅读笔记列表。
+
+### Files Created / Modified / Deleted
+
+- `notes/reading/2026-07-17-state-machine-proof-order.md`
+- `notes/reading/README.md`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已检查笔记文件创建成功，并保持为阅读笔记用途；本次未修改正式论文正文，因此未运行 LaTeX 编译。后续若要写入 `paper/sections/technique.tex` 或 `paper/sections/proof.tex`，需要再根据论文篇幅压缩并核对术语。
