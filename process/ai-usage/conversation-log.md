@@ -786,3 +786,263 @@ AI 同步更新 `notes/reading/README.md`，将新笔记加入阅读笔记列表
 ### Verification / Follow-up
 
 已检查笔记文件创建成功，并保持为阅读笔记用途；本次未修改正式论文正文，因此未运行 LaTeX 编译。后续若要写入 `paper/sections/technique.tex` 或 `paper/sections/proof.tex`，需要再根据论文篇幅压缩并核对术语。
+
+## 2026-07-17: 讨论证明性质论文是否需要正确性分析
+
+### User Prompt
+
+用户询问：
+
+> 对于这篇证明性质的论文。还需要进行正确性分析吗
+
+### AI Response / Action
+
+AI 回答：证明性质的论文仍然需要正确性分析，但不应写成算法论文中的“算法正确性证明”，而应写成对原论文证明本身的分析。重点应包括：主定理要证明什么、引理之间如何依赖、状态机模型和 admissible run 等假设是否足以支撑结论、Lemma 2 和 Lemma 3 在证明链条中的作用，以及最终无限 nondeciding run 如何与 total correctness 矛盾。
+
+### Files Created / Modified / Deleted
+
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+本次只回答写作策略问题，未修改正式论文正文，因此未运行 LaTeX 编译。后续如果用户决定撰写 `paper/sections/proof.tex`，应将“正确性分析”定位为“证明结构与有效性分析”。
+
+## 2026-07-17: 确认证明过程与正确性分析是否需要分开
+
+### User Prompt
+
+用户追问：
+
+> 所以我写完证明过程 就不需要再写正确性分析了是吗
+
+### AI Response / Action
+
+AI 回答：如果证明过程已经说明主定理、关键定义、Lemma 1/2/3 的作用、引理之间的依赖关系，以及最终如何构造 admissible nondeciding run 并与 total correctness 矛盾，那么不需要再单独写一个重复的“正确性分析”章节。可以把正确性分析的功能合并进证明过程小节，并在段落末尾简短总结“证明为何成立”。如果课程模板强制要求 correctness analysis，则应将其写成很短的 proof validity / proof structure analysis，而不是重新复述证明。
+
+### Files Created / Modified / Deleted
+
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+本次只回答写作结构问题，未修改正式论文正文，因此未运行 LaTeX 编译。后续写正文时需要避免 `proof` 和 `correctness analysis` 两节内容重复。
+
+## 2026-07-17: 按新逻辑重组论文结构
+
+### User Prompt
+
+用户要求：
+
+> 那你重新组织一下整个论文的结构。首先是引言 然后是这篇论文的证明的问题阐述，接着是这篇论文之前的相关工作，然后是这篇论文的证明过程，然后是这篇论文之后的相关工作
+
+### AI Response / Action
+
+AI 检查了 `paper/main.tex` 和 `paper/sections/` 下的现有章节文件。根据用户给出的新结构，AI 将正文输入顺序改为：Introduction、Problem and Motivation、Related Work Before FLP、Proof Process、Related Work After FLP、Conclusion。
+
+AI 将原先 `paper/sections/related-work.tex` 中混合的相关工作内容拆分为两个新章节文件：`prior-work.tex` 保留 FLP 之前的 Byzantine agreement 和 distributed commit / crash recovery 背景；`later-work.tex` 保留 FLP 之后的 randomized consensus、partial synchrony、failure detectors、state machine replication、Paxos、PBFT 和 Raft 等后续研究。AI 还将 `paper/sections/proof.tex` 的章节标题从 `Correctness Analysis` 改为 `Proof Process`，使其符合证明性质论文的写作安排。
+
+### Files Created / Modified / Deleted
+
+- `paper/main.tex`
+- `paper/sections/prior-work.tex`
+- `paper/sections/later-work.tex`
+- `paper/sections/proof.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并生成 `paper/main.pdf`。旧的 `paper/sections/related-work.tex` 暂未删除，但已不再由 `paper/main.tex` 引入；后续如果确认新结构稳定，可以再决定是否删除或保留为历史草稿。
+
+## 2026-07-18: 从状态机角度撰写证明过程正文
+
+### User Prompt
+
+用户要求：
+
+> 请以状态机的角度 完成review 证明部分的写作 ，然后不要中英混合 ，都用中文就行了
+
+### AI Response / Action
+
+AI 阅读了此前整理的 `notes/reading/2026-07-17-state-machine-proof-order.md` 和当前 `paper/sections/proof.tex`。AI 将 `paper/sections/proof.tex` 中的占位内容替换为完整中文正文，按状态机视角和原论文证明顺序组织：状态机模型、正确协议与容许执行、调度交换性、二价构型与单价构型、二价初始构型存在性、二价状态可延续性，以及最终构造永不决定的容许执行。AI 避免使用中英混排的术语，将正文术语统一为中文，仅保留必要数学符号。
+
+### Files Created / Modified / Deleted
+
+- `paper/sections/proof.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并生成 `paper/main.pdf`。已检查 `paper/main.log`，未发现未解析引用。后续用户应通读该节，确认篇幅是否适合课程 review；如果篇幅过长，可以再压缩 Lemma 3 的两种情况。
+
+## 2026-07-18: 解释二价初始构型证明中故障进程的作用
+
+### User Prompt
+
+用户围绕二价初始构型证明追问：
+
+> 所以也就是说 如果把p看作故障模型，其他模型应该也能得到决定值
+
+### AI Response / Action
+
+AI 解释：更准确地说，是把进程 `p` 看作那个允许发生故障的进程，而不是“故障模型”。在反证假设中，协议被假定为能够容忍一个故障并且完全正确，因此即使 `p` 从头到尾不执行，其他非故障进程所在的容许执行也必须最终产生决定值。该点用于说明为什么同一个调度可以分别从相邻初始构型 `C0` 和 `C1` 出发执行，并导出二者应有相同决定值的矛盾。
+
+### Files Created / Modified / Deleted
+
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+本次只解释证明中的概念，没有修改正式论文正文，因此未运行 LaTeX 编译。
+
+## 2026-07-18: 解释协议不能依赖特定进程参与的出处
+
+### User Prompt
+
+用户追问：
+
+> 那“一个能容忍一个故障的协议，不能把终止性建立在某个特定进程一定会参与的前提上。”这句话是在哪体现的
+
+### AI Response / Action
+
+AI 解释：这句话体现在论文对 `admissible run` 和 `totally correct in spite of one fault` 的定义中，并在 Lemma 2 的证明里被具体使用。因为容许执行允许最多一个故障进程，而故障进程被定义为没有执行无限多步的进程，所以证明可以选择让相邻初始构型中唯一不同的进程 `p` 不执行任何步骤。若协议完全正确，则这条执行仍必须是决定执行，因此其他非故障进程必须能够在没有 `p` 参与的情况下产生决定。
+
+### Files Created / Modified / Deleted
+
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+本次只解释证明定义与 Lemma 2 的关系，没有修改正式论文正文，因此未运行 LaTeX 编译。
+
+## 2026-07-18: 梳理原文定理和引理之间的关系
+
+### User Prompt
+
+用户询问：
+
+> 请问在原文中出现的那些定理引理什么的之间都是什么关系
+
+### AI Response / Action
+
+AI 用中文解释 FLP 原文中的证明依赖关系：Lemma 1 提供调度交换性；Lemma 2 依赖部分正确性、完全正确性和容许执行定义，证明存在二价初始构型；Lemma 3 依赖 Lemma 1 和二价定义，证明二价状态可延续；Theorem 1 依赖 Lemma 2 和 Lemma 3 构造容许但不决定的无限执行，从而反驳完全正确性。AI 还说明第 4 节 Theorem 2 是在不同假设下的正向补充结果，不是 Theorem 1 的证明依赖。
+
+### Files Created / Modified / Deleted
+
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+本次只解释原文证明结构，没有修改正式论文正文，因此未运行 LaTeX 编译。
+
+## 2026-07-18: 详细解释 Lemma 3 第二种情况
+
+### User Prompt
+
+用户要求详细解释 Lemma 3 中第二种情况：
+
+> 第二种情况是 p′= p。此时 e′和 e都发生在同一个进程 p上。论文考虑从 C0 出发的一次有限决定执行，并要求进程 p不执行步骤。设这段调度为 σ，执行后到达构型 A= σ(C0)...
+
+### AI Response / Action
+
+AI 用中文分步解释该证明片段：已知 `C1=e'(C0)`，`D0=e(C0)` 为 0 单价，`D1=e(C1)` 为 1 单价，且 `e` 与 `e'` 都发生在进程 `p` 上；由于反证假设协议完全正确，可以从 `C0` 选择一条让 `p` 不执行的容许决定执行，并取其有限决定前缀 `σ`。因为 `σ` 不包含进程 `p` 的步骤，所以可与 `e`、`e'` 交换顺序，得到从 `A=σ(C0)` 出发既能经 `e` 到达 0 单价后继，也能经 `e'` 再经 `e` 到达 1 单价后继，因此 `A` 是二价。但 `σ` 已经是决定前缀，`A` 具有决定值，依据一致性和输出不可改，`A` 必须是单价，于是矛盾。
+
+### Files Created / Modified / Deleted
+
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+本次只解释证明细节，没有修改正式论文正文，因此未运行 LaTeX 编译。
+
+## 2026-07-18: 重组 Lemma 3 第二种情况的正文证明
+
+### User Prompt
+
+用户在看完关于 Lemma 3 第二种情况的解释后要求：
+
+> 那请你重新组织一下整个这一部分的证明过程
+
+### AI Response / Action
+
+AI 修改了 `paper/sections/proof.tex` 中 Lemma 3 第二种情况的证明表述。原表述将“利用调度交换性比较路径”压缩为一段，容易误解为交换事件 `e'` 和 `e`。AI 将其重写为更明确的两条路径：先说明 `e'` 与 `e` 都发生在进程 `p` 上，二者不能直接交换；真正可以交换的是不涉及进程 `p` 的整段调度 `σ` 与进程 `p` 的事件序列。随后分别展开从 `A` 出发执行 `e` 到达 0 单价后继，以及从 `A` 出发执行 `e'` 再执行 `e` 到达 1 单价后继，从而推出 `A` 是二价构型，再与 `A` 已经具有决定值因而必须单价相矛盾。
+
+### Files Created / Modified / Deleted
+
+- `paper/sections/proof.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并生成 `paper/main.pdf`。后续如果仍觉得该段过长，可以将两条路径改成一个并列表格或图示说明。
+
+## 2026-07-18: 按引理顺序重组证明章节
+
+### User Prompt
+
+用户要求：
+
+> 然后整个证明的组织过程也重新整理一下 按照引理1及其证明，引理2及其证明，...这种方式 而不是你自己组织的小标题的形式
+
+### AI Response / Action
+
+AI 将 `paper/sections/proof.tex` 的组织方式从解释性小标题重排为更贴近原论文证明顺序的结构：预备定义、引理一及其证明、引理二及其证明、引理三及其证明、主定理及其证明。正文仍保持中文表述和状态机视角，并保留此前对引理三第二种情况中“调度 `σ` 与进程 `p` 的事件序列交换”的展开说明。
+
+### Files Created / Modified / Deleted
+
+- `paper/sections/proof.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并生成 `paper/main.pdf`。后续可继续检查“预备定义”篇幅是否过长，必要时压缩为更短的正文引入。
+
+## 2026-07-18: 插入原论文证明图
+
+### User Prompt
+
+用户询问：
+
+> 你能把原论文中有关哪一部分证明的图片放到对应review中的位置吗
+
+### AI Response / Action
+
+AI 使用 PDF 渲染方式从 `docs/flp.pdf` 中定位原论文第 2、3 节证明相关图片。AI 将原论文图 1、图 2、图 3 分别裁剪为独立图片，并保存到 `paper/figures/`。随后 AI 在 `paper/sections/proof.tex` 中将图 1 插入引理一交换性证明之后，将图 2 插入引理三第一种情况 `p' \neq p` 的说明之后，将图 3 插入引理三第二种情况 `p'=p` 的路径交换说明之后，并添加中文图注和交叉引用。
+
+AI 渲染 `paper/main.pdf` 的相关页面进行视觉检查，确认三张图没有截断、位置与正文匹配、大小可读。
+
+### Files Created / Modified / Deleted
+
+- `paper/figures/flp-figure-1.png`
+- `paper/figures/flp-figure-2.png`
+- `paper/figures/flp-figure-3.png`
+- `paper/sections/proof.tex`
+- `process/ai-usage/conversation-log.md`
+- Temporary render files were created under `tmp/pdfs/`.
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并生成 `paper/main.pdf`。已检查 `paper/main.log`，未发现未解析引用。已渲染并人工查看证明部分相关页面，确认图 1、图 2、图 3 均显示清晰且没有被截断。临时渲染目录 `tmp/pdfs/` 当前保留，可后续清理。
+
+## 2026-07-18: 在证明章节后新增初始失效进程章节
+
+### User Prompt
+
+用户要求：
+
+> 请把这一部分新加一个章节写在review里，就在证明章节的后面
+
+这里的“这一部分”承接前文关于原论文中 `Initially Dead Processes` 部分及其与主定理关系的讨论。
+
+### AI Response / Action
+
+AI 在 review 正文中新增“初始失效进程情形”章节，放在证明章节之后、FLP 之后相关工作章节之前。该章节说明：原论文第 4 节并不是主定理证明的一环，而是在不同故障假设下给出的对照性正向结果；主定理处理执行过程中可能崩溃的完全异步共识，而初始失效进程情形将故障限制为协议开始前已经发生，并在多数进程初始存活且执行过程中无新崩溃时可以实现共识。AI 同时更新 `paper/main.tex`，将该章节接入正文目录，并在摘要中加入对“初始失效进程情形”的概括。
+
+### Files Created / Modified / Deleted
+
+- `paper/sections/initially-dead-processes.tex`
+- `paper/main.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`。编译工具报告 `main.pdf` 已是最新，所有目标均为 up-to-date。后续仍建议用户对照原论文第 4 节核对“初始团”、多数存活条件和两阶段协议描述是否符合自己的理解，并根据课程要求决定该章节篇幅是否需要压缩。
