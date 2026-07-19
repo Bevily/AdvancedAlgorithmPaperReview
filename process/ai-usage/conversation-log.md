@@ -1046,3 +1046,70 @@ AI 在 review 正文中新增“初始失效进程情形”章节，放在证明
 ### Verification / Follow-up
 
 已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`。编译工具报告 `main.pdf` 已是最新，所有目标均为 up-to-date。后续仍建议用户对照原论文第 4 节核对“初始团”、多数存活条件和两阶段协议描述是否符合自己的理解，并根据课程要求决定该章节篇幅是否需要压缩。
+
+## 2026-07-19: 补写总结与结论章
+
+### User Prompt
+
+用户要求：
+
+> 请你再写完总结和结论章 内容要简短精炼
+
+随后用户因上一轮被中断，继续要求：
+
+> 接着写
+
+### AI Response / Action
+
+AI 将 `paper/sections/conclusion.tex` 中的 TODO 替换为简短的中文“总结与结论”章节。该章节概括本文 review 的主线：FLP 研究完全异步消息传递系统中的确定性共识问题；论文通过构型、事件、调度和二价构型证明，在允许一个崩溃故障的完全异步模型下，可以构造合法但不决定的执行；其理论意义在于揭示异步共识的模型边界，并说明实际协议若要保证终止，必须依赖随机化、部分同步、故障检测器、超时机制或多数派进展假设等额外条件。
+
+### Files Created / Modified / Deleted
+
+- `paper/sections/conclusion.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并更新 `paper/main.pdf`。已检查 `paper/main.log`，未发现未解析引用或 citation undefined 相关警告。后续可由用户根据课程要求替换标题、作者和摘要中的 TODO 信息。
+
+## 2026-07-19: 修改总结章节标题
+
+### User Prompt
+
+用户要求：
+
+> 标题改成总结就行了
+
+### AI Response / Action
+
+AI 将 `paper/sections/conclusion.tex` 中的章节标题从“总结与结论”改为“总结”，正文内容保持不变。
+
+### Files Created / Modified / Deleted
+
+- `paper/sections/conclusion.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并更新 `paper/main.pdf`。
+
+## 2026-07-19: 补写引言章节
+
+### User Prompt
+
+用户要求：
+
+> 请帮我写完introduction章节，同样语言要简练
+
+### AI Response / Action
+
+AI 将 `paper/sections/introduction.tex` 中的 TODO 替换为简练的中文引言。引言交代了被 review 的论文是 FLP 经典结果，说明其要回答的核心问题是：在允许一个进程崩溃的完全异步消息传递系统中，是否存在同时满足一致性、有效性和终止性的确定性共识协议；随后简要说明该问题的重要性，以及本文 review 的组织顺序。
+
+### Files Created / Modified / Deleted
+
+- `paper/sections/introduction.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并更新 `paper/main.pdf`。已检查 `paper/main.log`，未发现未解析引用或 citation undefined 相关警告。
