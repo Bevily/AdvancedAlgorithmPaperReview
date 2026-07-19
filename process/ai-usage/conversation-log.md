@@ -1113,3 +1113,70 @@ AI 将 `paper/sections/introduction.tex` 中的 TODO 替换为简练的中文引
 ### Verification / Follow-up
 
 已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并更新 `paper/main.pdf`。已检查 `paper/main.log`，未发现未解析引用或 citation undefined 相关警告。
+
+## 2026-07-19: 统一问题与动机章节为中文表述
+
+### User Prompt
+
+用户要求：
+
+> 请你重新组织一下问题与动机章节的语言 不要用中英文混合了 ，纯中文就行
+
+### AI Response / Action
+
+AI 修改了 `paper/sections/problem.tex`，将章节标题从英文改为“问题与动机”，并将正文中混用的英文术语改为中文表述。修改包括：将作者名改为中文译名，将“一致性、非平凡性、终止性”后的英文括注删除，将“崩溃故障”的英文写法改为中文，并将“FLP 论文”等表述调整为“该论文”，使该节整体语言更统一。AI 保持该章节原有范围，即只说明论文研究的问题及其重要性，不提前讨论证明结果的意义。
+
+### Files Created / Modified / Deleted
+
+- `paper/sections/problem.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已检查 `paper/sections/problem.tex`，正文中未发现残留的英文术语混用。已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并更新 `paper/main.pdf`。已检查 `paper/main.log`，未发现未解析引用或 citation undefined 相关警告。
+
+## 2026-07-19: 删除未使用的章节文件
+
+### User Prompt
+
+用户要求：
+
+> 请你把章节文件夹中没用的章节删掉
+
+### AI Response / Action
+
+AI 检查了 `paper/main.tex` 中实际引用的章节文件，并与 `paper/sections/` 目录下的 `.tex` 文件进行比对。当前正文只引用 `introduction`、`problem`、`prior-work`、`proof`、`initially-dead-processes`、`later-work` 和 `conclusion`。AI 删除了未被主文件引用的旧章节文件。
+
+### Files Created / Modified / Deleted
+
+- Deleted `paper/sections/comparison.tex`
+- Deleted `paper/sections/implementation.tex`
+- Deleted `paper/sections/limitations.tex`
+- Deleted `paper/sections/related-work.tex`
+- Deleted `paper/sections/technique.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`。编译工具报告 `main.pdf` 已是最新，说明删除的章节文件未被当前正文引用。
+
+## 2026-07-19: 保留作者人名英文写法
+
+### User Prompt
+
+用户指出：
+
+> 人名还是可以用英文的
+
+### AI Response / Action
+
+AI 检查了章节文件中作者人名的写法，发现 `paper/sections/problem.tex` 中此前将 Fisher、Lynch 和 Paterson 翻译成中文。根据用户要求，AI 将该处改回英文人名写法，其他中文术语保持不变。
+
+### Files Created / Modified / Deleted
+
+- `paper/sections/problem.tex`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已在 `paper/` 目录运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，编译通过并更新 `paper/main.pdf`。
