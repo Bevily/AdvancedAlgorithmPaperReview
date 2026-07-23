@@ -1,0 +1,87 @@
+<h2>选择课程论文的版式方向</h2>
+<p class="subtitle">三种方案都使用中文标题体系、单栏正文和克制的黑灰配色。点击你更喜欢的一种。</p>
+
+<style>
+  .paper-grid { display:grid; grid-template-columns:repeat(3,minmax(220px,1fr)); gap:18px; }
+  .paper-choice { cursor:pointer; border:2px solid #d8d8d3; background:#f7f7f4; padding:14px; border-radius:6px; transition:.15s ease; }
+  .paper-choice:hover { border-color:#8a1f2d; transform:translateY(-2px); }
+  .paper-choice.selected { border-color:#8a1f2d; box-shadow:0 0 0 2px rgba(138,31,45,.12); }
+  .sheet { aspect-ratio:210/297; background:#fff; border:1px solid #c9c9c4; box-shadow:0 5px 16px rgba(0,0,0,.09); padding:24px 22px; color:#202020; overflow:hidden; }
+  .sheet * { box-sizing:border-box; }
+  .brand { font-size:8px; text-align:center; color:#666; margin-bottom:22px; }
+  .title { font-family:serif; font-size:19px; font-weight:700; text-align:center; line-height:1.45; }
+  .subtitle-cn { font-size:8px; text-align:center; color:#777; margin:8px 0 18px; }
+  .meta { width:72%; margin:0 auto 22px; font-size:7px; line-height:2; border-top:1px solid #bbb; border-bottom:1px solid #bbb; text-align:center; }
+  .abstract { font-size:6.5px; line-height:1.65; text-align:justify; margin-bottom:16px; }
+  .abstract b { font-size:7px; }
+  .section-title { font-family:serif; font-size:10px; font-weight:700; margin:13px 0 6px; }
+  .rule-title { border-bottom:1.5px solid #8a1f2d; padding-bottom:3px; }
+  .bar-title { border-left:3px solid #8a1f2d; padding-left:6px; }
+  .center-title { text-align:center; border-bottom:1px solid #999; padding-bottom:4px; }
+  .lines { height:66px; background:repeating-linear-gradient(to bottom,transparent 0,transparent 6px,#d6d6d2 6px,#d6d6d2 6.5px); }
+  .footer { font-size:6px; color:#777; text-align:center; margin-top:15px; }
+  .choice-copy h3 { margin:14px 0 5px; font-size:16px; }
+  .choice-copy p { margin:0; font-size:13px; line-height:1.5; color:#5b5b58; }
+  .recommend { display:inline-block; margin-top:8px; padding:3px 7px; background:#8a1f2d; color:#fff; border-radius:3px; font-size:11px; }
+  @media (max-width:850px) { .paper-grid { grid-template-columns:1fr; } .sheet { max-width:360px; margin:auto; } }
+</style>
+
+<div class="paper-grid">
+  <div class="paper-choice" data-choice="a" onclick="toggleSelect(this)">
+    <div class="sheet">
+      <div class="brand">高级算法课程论文综述</div>
+      <div class="title">一个故障进程下分布式共识不可能性</div>
+      <div class="subtitle-cn">FLP 论文综述</div>
+      <div class="meta">作者：________　日期：2026 年 7 月</div>
+      <div class="abstract"><b>摘　要：</b>本文围绕完全异步消息传递系统中的确定性共识问题展开，梳理论文的问题背景、证明结构及后续研究。</div>
+      <div class="section-title rule-title">一、引言</div>
+      <div class="lines"></div>
+      <div class="section-title rule-title">二、问题与动机</div>
+      <div class="lines" style="height:45px"></div>
+      <div class="footer">— 1 —</div>
+    </div>
+    <div class="choice-copy">
+      <h3>A　经典课程论文</h3>
+      <p>正式、稳妥。红色细线只用于标题层级，首页信息完整，适合课程提交。</p>
+      <span class="recommend">推荐</span>
+    </div>
+  </div>
+
+  <div class="paper-choice" data-choice="b" onclick="toggleSelect(this)">
+    <div class="sheet">
+      <div class="brand" style="text-align:left;border-bottom:1px solid #444;padding-bottom:5px">高级算法 · 论文综述</div>
+      <div class="title" style="text-align:left;font-size:18px">一个故障进程下<br>分布式共识不可能性</div>
+      <div class="subtitle-cn" style="text-align:left">FLP 论文综述</div>
+      <div class="meta" style="width:100%;text-align:left;margin-left:0">作者：________　课程：高级算法　日期：2026 年 7 月</div>
+      <div class="abstract"><b>摘要</b><br>本文围绕完全异步消息传递系统中的确定性共识问题展开，梳理论文的问题背景、证明结构及后续研究。</div>
+      <div class="section-title bar-title">1　引言</div>
+      <div class="lines"></div>
+      <div class="section-title bar-title">2　问题与动机</div>
+      <div class="lines" style="height:45px"></div>
+      <div class="footer" style="text-align:right">1</div>
+    </div>
+    <div class="choice-copy">
+      <h3>B　现代简洁综述</h3>
+      <p>左对齐标题、信息密度适中，阅读轻松，但比传统课程论文稍活跃。</p>
+    </div>
+  </div>
+
+  <div class="paper-choice" data-choice="c" onclick="toggleSelect(this)">
+    <div class="sheet">
+      <div class="brand">高级算法课程论文综述</div>
+      <div class="title" style="font-size:17px">一个故障进程下分布式共识不可能性</div>
+      <div class="subtitle-cn">FLP 论文综述</div>
+      <div class="meta">作者：________　日期：2026 年 7 月</div>
+      <div class="abstract" style="border:1px solid #aaa;padding:8px"><b>摘要：</b>本文围绕完全异步消息传递系统中的确定性共识问题展开，梳理论文的问题背景、证明结构及后续研究。</div>
+      <div class="section-title center-title">一　引言</div>
+      <div class="lines"></div>
+      <div class="section-title center-title">二　问题与动机</div>
+      <div class="lines" style="height:45px"></div>
+      <div class="footer">第 1 页，共 11 页</div>
+    </div>
+    <div class="choice-copy">
+      <h3>C　规整报告体</h3>
+      <p>标题居中、摘要有边框、页码信息明确，结构最规整，但视觉略显厚重。</p>
+    </div>
+  </div>
+</div>

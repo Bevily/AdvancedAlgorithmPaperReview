@@ -1321,3 +1321,23 @@ AI 将文档类切换为 `ctexart`，采用 A4 单栏、小四号正文和 1.25 
 ### Verification / Follow-up
 
 已使用 `latexmk -xelatex -interaction=nonstopmode -halt-on-error -gg main.tex` 完整重新编译，生成 13 页 A4 PDF。已检查 `paper/main.log`，未发现未定义引用、文献缺失、字体回退、内容溢出或其他 LaTeX 警告。已使用 `pdftotext` 核对摘要、关键词、目录和参考文献等中文结构名称，并将全部页面渲染为 PNG 逐页检查；首页、目录、正文、证明图片和参考文献页均无重叠、裁切或孤页。排版修改已提交，本地预览服务已关闭，视觉检查所用的临时 PNG 已清理；`.superpowers/` 中的设计预览资料保留但未纳入提交。用户仍需填写首页姓名和学号，并在提交前自行核对正文内容与引用。
+
+## 2026-07-23: 填写论文作者信息
+
+### User Prompt
+
+用户要求将首页姓名填写为“袁泽希”，学号填写为“241880522”；同一请求重复发送一次，按一次修改处理。
+
+### AI Response / Action
+
+AI 修改 `paper/main.tex` 中的作者信息，将姓名和学号替换为用户提供的内容，其他正文和排版配置保持不变。
+
+### Files Created / Modified / Deleted
+
+- `paper/main.tex`
+- 更新编译产物 `paper/main.pdf`
+- `process/ai-usage/conversation-log.md`
+
+### Verification / Follow-up
+
+已运行 `latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex`，生成 13 页 PDF；已检查日志，未发现关键 LaTeX 警告。通过 `pdftotext` 和首页 PNG 视觉检查确认姓名“袁泽希”和学号“241880522”显示正确，首页布局无挤压或错位。首页作者信息已填写完成。
