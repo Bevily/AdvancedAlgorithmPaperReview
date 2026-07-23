@@ -1,6 +1,5 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[UTF8,zihao=-4,a4paper]{ctexart}
 
-\usepackage[UTF8]{ctex}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{algorithm}
 \usepackage{algorithmic}
@@ -9,34 +8,76 @@
 \usepackage{hyperref}
 \usepackage{geometry}
 \usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{setspace}
 
-\geometry{margin=1in}
+\geometry{
+  top=2.6cm,
+  bottom=2.5cm,
+  left=2.8cm,
+  right=2.8cm,
+  headheight=15pt
+}
+
+\setstretch{1.25}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+
+\ctexset{
+  section = {
+    name = {,、},
+    number = \chinese{section},
+    format = \heiti\zihao{-3}\mdseries,
+    beforeskip = 2.2ex plus 0.5ex minus 0.2ex,
+    afterskip = 1.2ex plus 0.2ex
+  },
+  subsection = {
+    name = {（,）},
+    number = \chinese{subsection},
+    format = \heiti\zihao{4}\mdseries,
+    beforeskip = 1.8ex plus 0.4ex minus 0.2ex,
+    afterskip = 0.8ex plus 0.2ex
+  }
+}
 
 \hypersetup{
   colorlinks=true,
-  linkcolor=blue,
-  citecolor=blue,
-  urlcolor=blue
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black
 }
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}{Lemma}
-\newtheorem{definition}{Definition}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\zihao{-5} 高级算法课程论文综述}
+\fancyfoot[C]{\zihao{-5}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
 
-\title{Paper Review Title}
-\author{TODO: Your Name}
+\newtheorem{theorem}{定理}
+\newtheorem{lemma}{引理}
+\newtheorem{definition}{定义}
+\renewcommand{\refname}{参考文献}
+
+\title{\heiti\mdseries\zihao{2} 一个故障进程下分布式共识不可能性\\[0.8em]
+  \zihao{4}\songti FLP 论文综述}
+\author{姓名：\underline{\hspace{5em}}\qquad 学号：\underline{\hspace{7em}}}
 \date{\today}
 
 \begin{document}
 
 \maketitle
+\thispagestyle{plain}
 
 \begin{abstract}
-本文 review 的论文是：\textbf{TODO: paper title}。
-本文将依次介绍该论文的研究问题、FLP 之前的相关工作、论文的不可能性证明过程、初始失效进程情形，以及 FLP 之后相关研究如何回应这一理论边界。
+本文综述 Fisher、Lynch 和 Paterson 的论文《一个故障进程下分布式共识的不可能性》。全文依次介绍论文所研究的问题、FLP 之前的相关工作、不可能性证明过程、初始失效进程情形，以及 FLP 之后的相关研究。
+
+\noindent\textbf{关键词：}分布式共识；异步系统；故障容错；不可能性证明
 \end{abstract}
 
+\clearpage
 \tableofcontents
+\clearpage
 
 \input{sections/introduction}
 \input{sections/problem}
@@ -46,7 +87,10 @@
 \input{sections/later-work}
 \input{sections/conclusion}
 
+\begingroup
+\zihao{-5}
 \bibliographystyle{plain}
 \bibliography{references}
+\endgroup
 
 \end{document}
