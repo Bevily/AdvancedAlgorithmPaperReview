@@ -1,7 +1,7 @@
-\section{Related Work Before FLP}
+\section{FLP 之前的相关工作}
 
-FLP 论文讨论的是异步消息传递系统中的共识不可能性。这个问题并不是孤立出现的；在 FLP 之前，分布式系统、容错计算和分布式数据库领域已经围绕 agreement、commit 和 fault tolerance 形成了多条研究脉络。FLP 的贡献可以放在这些工作之间理解：一方面，它继承了早期 agreement 问题对一致性的关注；另一方面，它把模型收窄到可靠消息、crash failure 和完全异步执行，从而揭示了一个不同于 Byzantine fault 的困难来源。
+FLP 论文讨论的是异步消息传递系统中的共识不可能性。在 FLP 之前，分布式系统、容错计算和分布式数据库领域已经围绕一致性、提交和容错形成了多条研究脉络。FLP 的贡献可以放在这些工作之间理解：一方面，它继承了早期一致性问题对共同决定的关注；另一方面，它把模型收窄到可靠消息、崩溃故障和完全异步执行，从而揭示了一个不同于拜占庭故障的困难来源。
 
-早期最重要的一条相关研究是 Byzantine agreement。Pease、Shostak 和 Lamport 研究了存在故障处理器时，非故障处理器如何对信息形成一致认识 \cite{pease1980reaching}。他们使用 interactive consistency 的形式化表述，要求所有非故障处理器最终得到相同的信息向量，并且向量中对应非故障处理器的值必须是该处理器真实持有的值。该工作说明，在故障处理器可能向不同接收者发送不同信息时，agreement 问题不能依靠简单多数投票解决，而需要足够的冗余。Lamport、Shostak 和 Pease 随后用 Byzantine Generals problem 将这一类问题表述为经典模型 \cite{lamport1982byzantine}。这些工作关注的是任意或恶意故障，而 FLP 关注的是更弱的 crash failure；这种对比使 FLP 的结论更突出：即使故障进程不会撒谎、不会伪造消息，只是静默停止，完全异步模型仍然会带来根本困难。
+早期最重要的一条相关研究是拜占庭一致性。Pease、Shostak 和 Lamport 研究了存在故障处理器时，非故障处理器如何对信息形成一致认识 \cite{pease1980reaching}。他们使用交互一致性的形式化表述，要求所有非故障处理器最终得到相同的信息向量，并且向量中对应非故障处理器的值必须是该处理器真实持有的值。该工作说明，在故障处理器可能向不同接收者发送不同信息时，一致性问题不能依靠简单多数投票解决，而需要足够的冗余。Lamport、Shostak 和 Pease 随后用拜占庭将军问题将这一类问题表述为经典模型 \cite{lamport1982byzantine}。这些工作关注的是任意或恶意故障，而 FLP 关注的是更弱的崩溃故障；这种对比使 FLP 的结论更突出：即使故障进程不会撒谎、不会伪造消息，只是静默停止，完全异步模型仍然会带来根本困难。
 
-另一条与 FLP 动机直接相关的研究线来自分布式数据库中的事务提交。事务提交要求多个数据管理进程一致地决定 commit 或 abort；如果不同副本作出不同决定，数据库状态就会分裂。Dolev 和 Strong 研究了 distributed commit with bounded waiting，试图避免 commit 协议中某些参与者无限等待的问题 \cite{dolev1982distributed}。Skeen 的 nonblocking commit protocols 和 decentralized termination protocol 进一步分析了提交协议中哪些状态会导致 blocking，以及在站点故障后如何推动事务进入最终决定 \cite{skeen1981nonblocking,skeen1982decentralized}。Skeen 和 Stonebraker 则从 crash recovery 角度形式化分布式系统在故障和恢复后的状态一致性问题 \cite{skeen1983formal}。这些工作表明，FLP 论文中的 transaction commit 例子不是附带说明，而是当时分布式数据库系统面临的实际问题：系统既要保持一致性，又希望在故障出现后不无限等待。
+另一条与 FLP 动机直接相关的研究线来自分布式数据库中的事务提交。事务提交要求多个数据管理进程一致地决定提交或放弃；如果不同副本作出不同决定，数据库状态就会分裂。Dolev 和 Strong 研究了有界等待的分布式提交，试图避免提交协议中某些参与者无限等待的问题 \cite{dolev1982distributed}。Skeen 的非阻塞提交协议和分散式终止协议进一步分析了提交协议中哪些状态会导致阻塞，以及在站点故障后如何推动事务进入最终决定 \cite{skeen1981nonblocking,skeen1982decentralized}。Skeen 和 Stonebraker 则从崩溃恢复角度形式化分布式系统在故障和恢复后的状态一致性问题 \cite{skeen1983formal}。这些工作表明，FLP 论文中的事务提交例子不是附带说明，而是当时分布式数据库系统面临的实际问题：系统既要保持一致性，又希望在故障出现后不无限等待。

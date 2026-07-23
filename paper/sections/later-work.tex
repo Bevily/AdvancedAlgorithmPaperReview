@@ -1,13 +1,13 @@
-\section{Related Work After FLP}
+\section{FLP 之后的相关工作}
 
-FLP 之后，一类直接回应是不再坚持确定性终止，而是引入随机化。Ben-Or 提出了完全异步系统中的随机化 agreement 协议 \cite{benor1983advantage}。该工作明确以 FLP 的不可能性为背景：既然确定性协议无法在完全异步系统中保证终止，那么可以让进程使用随机选择，并将终止保证改为概率意义上的终止。Ben-Or 的协议并不推翻 FLP，而是改变了问题要求。Bracha 和 Toueg 对 resilient consensus protocols 的研究也属于这一方向 \cite{bracha1983resilient}。这类工作说明，FLP 的影响不是让共识研究停止，而是迫使后续协议明确说明自己在哪些要求上不同于 FLP 的原始模型。
+FLP 之后，一类直接回应是不再坚持确定性终止，而是引入随机化。Ben-Or 提出了完全异步系统中的随机化一致性协议 \cite{benor1983advantage}。该工作明确以 FLP 的不可能性为背景：既然确定性协议无法在完全异步系统中保证终止，那么可以让进程使用随机选择，并将终止保证改为概率意义上的终止。Ben-Or 的协议并不推翻 FLP，而是改变了问题要求。Bracha 和 Toueg 对弹性共识协议的研究也属于这一方向 \cite{bracha1983resilient}。这类工作说明，FLP 的影响不是让共识研究停止，而是迫使后续协议明确说明自己在哪些要求上不同于 FLP 的原始模型。
 
-另一类回应是弱化完全异步模型，加入更符合实际系统的时序假设。Dwork、Lynch 和 Stockmeyer 提出了 partial synchrony 模型 \cite{dwork1988consensus}。完全同步模型假设消息延迟和处理速度有已知上界；完全异步模型则完全没有这样的上界。Partial synchrony 位于两者之间：系统可能存在某些上界，但这些上界可能未知，或者只在某个 global stabilization time 之后才成立。这个模型解释了为什么现实系统常常可以使用 timeout、leader 和重试机制：这些机制并不是在纯粹异步模型中无条件可靠，而是依赖某种最终稳定的时间假设。
+另一类回应是弱化完全异步模型，加入更符合实际系统的时序假设。Dwork、Lynch 和 Stockmeyer 提出了部分同步模型 \cite{dwork1988consensus}。完全同步模型假设消息延迟和处理速度有已知上界；完全异步模型则完全没有这样的上界。部分同步位于两者之间：系统可能存在某些上界，但这些上界可能未知，或者只在某个全局稳定时间之后才成立。这个模型解释了为什么现实系统常常可以使用超时、领导者和重试机制：这些机制并不是在纯粹异步模型中无条件可靠，而是依赖某种最终稳定的时间假设。
 
-故障检测器理论则从另一个角度回应 FLP。FLP 的核心困难之一是进程无法判断另一个进程是已经崩溃，还是只是运行很慢。Chandra 和 Toueg 引入 unreliable failure detectors，用 completeness 和 accuracy 刻画故障检测器可能提供的信息，并证明即使故障检测器可能犯错，某些类型的检测器仍足以帮助异步 crash failure 系统解决 consensus \cite{chandra1996unreliable}。Chandra、Hadzilacos 和 Toueg 进一步研究 solving consensus 所需的 weakest failure detector \cite{chandra1996weakest}。这条研究线把 FLP 的直觉转化为更精确的问题：完全异步系统缺少关于故障的信息；若要重新获得共识可解性，至少需要补充多少信息？
+故障检测器理论则从另一个角度回应 FLP。FLP 的核心困难之一是进程无法判断另一个进程是已经崩溃，还是只是运行很慢。Chandra 和 Toueg 引入不可靠故障检测器，用完备性和准确性刻画故障检测器可能提供的信息，并证明即使故障检测器可能犯错，某些类型的检测器仍足以帮助异步崩溃故障系统解决共识问题 \cite{chandra1996unreliable}。Chandra、Hadzilacos 和 Toueg 进一步研究解决共识所需的最弱故障检测器 \cite{chandra1996weakest}。这条研究线把 FLP 的直觉转化为更精确的问题：完全异步系统缺少关于故障的信息；若要重新获得共识可解性，至少需要补充多少信息？
 
-在系统实现层面，FLP 之后的研究将 consensus 与复制服务、日志复制和容错系统构建联系起来。Schneider 的 state machine approach 将容错服务建模为多个确定性状态机副本按相同顺序执行相同命令 \cite{schneider1990state}。这一路线把共识变成实现复制状态机的关键子问题：只要所有副本对操作顺序达成一致，它们就能保持一致状态。Lamport 的 Paxos 系列工作进一步给出了 crash fault 场景下影响深远的共识协议 \cite{lamport1998part,lamport2001paxos}。Paxos 使用 ballot、quorum 和多数派交集保证安全性，并在实际系统中配合 leader、重试和超时机制获得进展。Paxos 并不违反 FLP；它的活性依赖额外的进展假设，而其价值在于把这些假设组织成可实现的协议框架。
+在系统实现层面，FLP 之后的研究将共识与复制服务、日志复制和容错系统构建联系起来。Schneider 的状态机方法将容错服务建模为多个确定性状态机副本按相同顺序执行相同命令 \cite{schneider1990state}。这一路线把共识变成实现复制状态机的关键子问题：只要所有副本对操作顺序达成一致，它们就能保持一致状态。Lamport 的 Paxos 系列工作进一步给出了崩溃故障场景下影响深远的共识协议 \cite{lamport1998part,lamport2001paxos}。Paxos 使用轮次编号、法定集合和多数派交集保证安全性，并在实际系统中配合领导者、重试和超时机制获得进展。Paxos 并不违反 FLP；它的活性依赖额外的进展假设，而其价值在于把这些假设组织成可实现的协议框架。
 
-后续系统工作还将共识思想推广到更强故障模型或更易实现的协议结构。Castro 和 Liskov 的 PBFT 将 state machine replication 推向实用 Byzantine fault tolerance，在 $3f+1$ 个副本中容忍 $f$ 个 Byzantine faulty replicas \cite{castro1999practical}。Ongaro 和 Ousterhout 的 Raft 则针对 Paxos 难以理解和实现的问题，将 replicated log consensus 分解为 leader election、log replication、safety 和 membership change 等部分 \cite{ongaro2014search}。这些工作共同说明，FLP 不可能性结果并没有否定现实系统中的共识服务；相反，它促使后续研究在提出协议时更明确地区分安全性、活性以及协议所依赖的时序、故障检测、多数派或随机化假设。
+后续系统工作还将共识思想推广到更强故障模型或更易实现的协议结构。Castro 和 Liskov 的 PBFT 将状态机复制推向实用拜占庭容错，在 $3f+1$ 个副本中容忍 $f$ 个拜占庭故障副本 \cite{castro1999practical}。Ongaro 和 Ousterhout 的 Raft 则针对 Paxos 难以理解和实现的问题，将复制日志共识分解为领导者选举、日志复制、安全性和成员变更等部分 \cite{ongaro2014search}。这些工作共同说明，FLP 不可能性结果并没有否定现实系统中的共识服务；相反，它促使后续研究在提出协议时更明确地区分安全性、活性以及协议所依赖的时序、故障检测、多数派或随机化假设。
 
-综上，FLP 之后的相关研究主要沿三类方向展开。第一，随机化、partial synchrony 和 failure detector 等工作直接回应 FLP，展示如何通过改变模型假设或终止要求恢复共识可解性。第二，state machine replication、Paxos、PBFT 和 Raft 等系统化工作说明，共识最终成为构建容错服务的核心工具。第三，这些后续工作共同表明，实际系统必须清楚说明自己依赖了哪些超出完全异步模型的条件。
+综上，FLP 之后的相关研究主要沿三类方向展开。第一，随机化、部分同步和故障检测器等工作直接回应 FLP，展示如何通过改变模型假设或终止要求恢复共识可解性。第二，状态机复制、Paxos、PBFT 和 Raft 等系统化工作说明，共识最终成为构建容错服务的核心工具。第三，这些后续工作共同表明，实际系统必须清楚说明自己依赖了哪些超出完全异步模型的条件。
